@@ -1,4 +1,15 @@
-const choices = ['rock', 'paper', 'scissors'];
+let scorePC = 0
+let playerScore = 0
+const choices = ['rock', 'paper', 'scissors']
+const rock = document.querySelector('#rock')
+const paper = document.querySelector('#paper')
+const scissors = document.querySelector('#scissors')
+const results = document.querySelector('.results')
+const container = document.querySelector('.btnContainer')
+const playTallySpan = document.querySelector('.playerTally')
+const pcTallySpan = document.querySelector('.pcTally')
+
+
 
 
 const getComputerChoice = () => {
@@ -7,78 +18,65 @@ const getComputerChoice = () => {
 }
 
 
-const checkWinner = (playerSelection, computerSelection) => {
-
-    if (playerSelection == computerSelection) {
-        return 'Tie'
-    } else if (
-        (playerSelection == 'rock' && computerSelection == 'scissors') ||
-        (playerSelection == 'paper' && computerSelection == 'rock') ||
-        (playerSelection == 'scissors' && computerSelection == 'paper')
-    ) {
-        return 'Player'
-    } else {
-        return 'PC'
-    }
-}
-
 
 const playRound = (playerSelection, computerSelection) => {
-    const result = checkWinner(playerSelection, computerSelection);
-
-    if (result == 'Tie') {
-        return 'It was a tie!!!'
-    } else if (result == 'Player') {
-        return `You win!!! ${playerSelection} beats ${computerSelection}`
+    const p = document.createElement('p')
+    if (playerSelection === computerSelection) {
+        p.innerText = 'It was a tie!!!'
+    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
+        playerScore++
+        p.innerText = `You win!!! ${playerSelection} beats ${computerSelection}`
+    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
+        playerScore++
+        p.innerText = `You win!!! ${playerSelection} beats ${computerSelection}`
+    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
+        playerScore++
+        p.innerText = `You win!!! ${playerSelection} beats ${computerSelection}`
     } else {
-        return `You lose!!! ${computerSelection} beats ${playerSelection}`
+        scorePC++
+        p.innerText = `You lose!!! ${computerSelection} beats ${playerSelection}`
     }
-
+    results.append(p)
 }
 
 
-const getPlayerChoice = () => {
-    let playerInput = false;
-    while (playerInput == false) {
-        const inputted = prompt('Rock, Paper, Scissors?');
-        if (inputted == null) {
-            continue;
-        }
-        const inputInLower = inputted.toLocaleLowerCase();
-        if (choices.includes(inputInLower)) {
-            playerInput = true;
-            return inputInLower;
-        }
+const checkWinner = (playerScore, scorePC) => {
+    const strong = document.createElement('strong')
+    if (playerScore === 5) {
+        strong.classList.add('Won')
+        strong.innerText = `You win player score is: ${playerScore} and pc score is: ${scorePC}`
+    } else if (scorePC === 5) {
+        strong.classList.add('Lost!!')
+        strong.innerText = `You lose player score is: ${playerScore} and pc score is: ${scorePC}`
     }
+    results.append(strong)
 }
 
-
-const game = () => {
-    let scorePlayer = 0;
-    let scorePC = 0;
-
-
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = getPlayerChoice();
-        const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection, computerSelection));
-        console.log('---------------------------------------');
-        if (checkWinner(playerSelection, computerSelection) == 'Player') {
-            scorePlayer++;
-        } else if (checkWinner(playerSelection, computerSelection) == 'PC') {
-            scorePC++;
-        }
-    }
-    console.log('Game over')
-    if (scorePlayer > scorePC) {
-        console.log('Player wins!!!')
-    } else if (scorePlayer < scorePC) {
-        console.log('PC Bot Wins!!!')
-    } else {
-        console.log('Tie!!!!!!!!!!!!!!rock')
-    }
-
-
+const updateScore = (playerScore, scorePC) => {
+    playTallySpan.innerText = `Player score: ${playerScore}`
+    pcTallySpan.innerText = `NPC score: ${scorePC}`
 }
 
-game()
+rock.addEventListener('click', e => {
+    const computerSelection = getComputerChoice()
+    const playerSelection = 'rock'
+    playRound(playerSelection, computerSelection)
+    checkWinner(playerScore, scorePC)
+    updateScore(playerScore, scorePC)
+})
+
+paper.addEventListener('click', e => {
+    const computerSelection = getComputerChoice()
+    const playerSelection = 'paper'
+    playRound(playerSelection, computerSelection)
+    checkWinner(playerScore, scorePC)
+    updateScore(playerScore, scorePC)
+})
+
+scissors.addEventListener('click', e => {
+    const computerSelection = getComputerChoice()
+    const playerSelection = 'scissors'
+    playRound(playerSelection, computerSelection)
+    checkWinner(playerScore, scorePC)
+    updateScore(playerScore, scorePC)
+})

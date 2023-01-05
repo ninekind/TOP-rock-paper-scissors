@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    flex-direction: column;
+}
+
+.results {
+    background-color: aliceblue;
+    align-self: center;
+    background-color: burlywood;
+    color: brown;
+}
+
+.btnContainer {
+    margin: 50px;
+    padding: 50px;
+    background-color: darkseagreen;
+    border: solid;
+    border-color: black;
+}
+
+button {
+    background-color: #4CAF50;
+    border: solid;
+    border-color: black;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
